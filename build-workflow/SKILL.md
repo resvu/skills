@@ -1,5 +1,5 @@
 ---
-name: resvu-workflow
+name: build-workflow
 description: Turn a spreadsheet, CSV, PDF or document that describes a request form into the JSON file the admin console's "Import template" button accepts — form fields plus workflow statuses. Use when someone hands over a form definition (questions, answer types, statuses) in Excel/CSV/Word/PDF and wants it as a Resvu workflow template, or when hand-authoring, repairing or validating a template export JSON.
 ---
 

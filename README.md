@@ -42,8 +42,8 @@ Copy or symlink the skill directory into a skills directory the agent reads — 
 personal use, or `.claude/skills/` inside a project:
 
 ```bash
-ln -s "$PWD/build-workflow" ~/.claude/skills/resvu-workflow
+ln -s "$PWD/build-workflow" ~/.claude/skills/build-workflow
 ```
 
-The directory name is what the agent lists the skill under; the `name:` in `SKILL.md` frontmatter is
-`resvu-workflow`.
+The directory name is what the agent lists the skill under, and matches the `name:` in the `SKILL.md`
+frontmatter.
