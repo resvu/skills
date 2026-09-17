@@ -57,3 +57,21 @@ try again.
 ## Questions or problems
 
 Open an issue on this repository, or ask whoever set Claude up for your team.
+
+## Passing this on to someone
+
+Everything a new person needs, ready to send:
+
+```
+Resvu has a Claude helper that builds request forms for you — either from a
+form you already have, or from a description of the one you want.
+
+To set it up, open Claude Code and type these two lines:
+
+  /plugin marketplace add resvu/skills
+  /plugin install resvu@resvu-skills
+
+That's a one-off. After that, just send Claude your form and ask for a Resvu
+workflow template — or describe the form you want, if you don't have one yet.
+You'll get back a file to load under Workflow → Templates → Import template.
+```

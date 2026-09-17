@@ -1,10 +1,11 @@
 {
   "name": "resvu",
-  "description": "Skills for working with Resvu. Builds admin-console workflow templates from a spreadsheet, CSV, PDF or document describing a request form.",
-  "version": "1.1.0",
+  "description": "Skills for working with Resvu. Builds an admin-console workflow template from a form you already have \u2014 spreadsheet, CSV, PDF or document \u2014 or from a description of the form you want.",
+  "version": "1.1.1",
   "author": {
     "name": "Resvu"
   },
+  "license": "MIT",
   "homepage": "https://github.com/resvu/skills",
   "repository": "https://github.com/resvu/skills"
 }
