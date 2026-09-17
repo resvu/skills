@@ -12,22 +12,6 @@ moves through. Also covers hand-authoring, repairing and validating an existing 
 
 The skill's own instructions live in [`build-workflow/SKILL.md`](build-workflow/SKILL.md).
 
-```
-build-workflow/
-├── SKILL.md                              # the workflow the agent follows
-├── references/
-│   ├── json-contract.md                  # exact shape of every item type + where each rule is enforced
-│   └── source-mapping.md                 # reading the source file and mapping it onto a spec
-├── examples/
-│   ├── input-spec.example.json           # build input — not importable
-│   └── importable-template.example.json  # what that spec builds into
-└── scripts/
-    ├── read-sheet.mjs                    # dump .xlsx/.csv/.tsv rows as JSON
-    ├── build-template.mjs                # spec.json → importable template
-    ├── validate-template.mjs             # re-implements all four import gates
-    └── template_tool.py                  # the same three as read/build/validate subcommands
-```
-
 #### Using the scripts directly
 
 Nothing needs installing — the Node scripts and the Python one are dependency-free (they unzip `.xlsx`
