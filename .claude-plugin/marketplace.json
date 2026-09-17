@@ -1,0 +1,19 @@
+{
+  "name": "resvu-skills",
+  "description": "Claude Code skills for working with Resvu.",
+  "owner": {
+    "name": "Resvu",
+    "url": "https://github.com/resvu/skills"
+  },
+  "plugins": [
+    {
+      "name": "resvu",
+      "source": "./plugins/resvu",
+      "description": "Skills for working with Resvu. Builds admin-console workflow templates from a spreadsheet, CSV, PDF or document describing a request form.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Resvu"
+      }
+    }
+  ]
+}

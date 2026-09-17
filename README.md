@@ -1,6 +1,24 @@
 # resvu-skills
 
-Agent skills for working with Resvu.
+Claude Code skills for working with Resvu, packaged as a plugin.
+
+This repository is both the plugin and the marketplace that serves it.
+
+## Install
+
+```
+/plugin marketplace add resvu/skills
+/plugin install resvu@resvu-skills
+```
+
+The skill is then available as `/resvu:build-workflow`, and Claude will reach for it on its own when
+someone hands over a form definition.
+
+To try it without installing:
+
+```bash
+claude --plugin-dir ./plugins/resvu
+```
 
 ## Skills
 
@@ -10,7 +28,8 @@ Turns a spreadsheet, CSV, PDF or document describing a request form into the JSO
 **Workflow → Templates → Import template** button accepts: form fields plus the workflow statuses a request
 moves through. Also covers hand-authoring, repairing and validating an existing template export.
 
-The skill's own instructions live in [`build-workflow/SKILL.md`](build-workflow/SKILL.md).
+The skill's own instructions live in
+[`plugins/resvu/skills/build-workflow/SKILL.md`](plugins/resvu/skills/build-workflow/SKILL.md).
 
 #### Using the scripts directly
 
@@ -18,7 +37,7 @@ Nothing needs installing — the Node scripts and the Python one are dependency-
 workbooks and read the sheet XML themselves) and implement identical rules.
 
 ```bash
-cd build-workflow
+cd plugins/resvu/skills/build-workflow
 
 node scripts/read-sheet.mjs form.xlsx               # inspect the source rows
 node scripts/build-template.mjs spec.json -o "Pet application.json"
@@ -36,14 +55,26 @@ python3 scripts/template_tool.py validate "Pet application.json"
 The two implementations must stay in step: a rule changed in one belongs in the other, and
 `references/json-contract.md` is the source both follow.
 
-## Installing a skill
+## Layout
 
-Copy or symlink the skill directory into a skills directory the agent reads — `~/.claude/skills/` for
-personal use, or `.claude/skills/` inside a project:
-
-```bash
-ln -s "$PWD/build-workflow" ~/.claude/skills/build-workflow
+```
+.claude-plugin/marketplace.json   # the marketplace listing
+plugins/resvu/
+├── .claude-plugin/plugin.json    # the plugin manifest
+└── skills/
+    └── build-workflow/           # one skill; more go alongside it
 ```
 
-The directory name is what the agent lists the skill under, and matches the `name:` in the `SKILL.md`
-frontmatter.
+Adding a skill means dropping another directory under `plugins/resvu/skills/` — the marketplace and
+manifest need no change.
+
+## Before publishing changes
+
+```bash
+claude plugin validate . --strict
+claude plugin validate ./plugins/resvu --strict
+```
+
+Bump `version` in **both** `plugins/resvu/.claude-plugin/plugin.json` and
+`.claude-plugin/marketplace.json` when you change the plugin — installed copies only update when the
+version changes.
