@@ -2,16 +2,16 @@
 
 Three gates decide whether a file imports. All three must pass.
 
-| Gate | Where it runs | What it checks |
-| --- | --- | --- |
-| Import schema | Admin console, on picking the file | Top-level keys and their primitive types; `workflows` non-empty |
-| `Form` validation | API, on create | Title/description present, popup and auto-close pairings |
-| `FormVersion` validation | API, on create | Per-item required fields, index ranges, option shape |
+| Gate | What it checks |
+| --- | --- |
+| Import schema | Top-level keys and their primitive types; `workflows` non-empty |
+| `Form` validation | Title/description present, popup and auto-close pairings |
+| `FormVersion` validation | Per-item required fields, index ranges, option shape |
 
-Plus one rule applied when the form is created: at most one `SHORT_TEXT` item with `showAsSummary: true`.
+Plus one rule: at most one `SHORT_TEXT` item with `showAsSummary: true`.
 
-The API's notion of "present" is stricter than the import schema's: **`''`, `null`, `undefined` and `[]`
-all count as missing**; `false` and `0` count as present.
+The later gates are stricter about what counts as present than the import schema is: **`''`, `null`,
+`undefined` and `[]` all count as missing**; `false` and `0` count as present.
 
 ## Top level
 

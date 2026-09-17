@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // Checks a workflow-template JSON against every gate a real import passes through:
 //
-//   1. the admin console's import schema, applied when the file is picked
-//   2. the Form validation the API runs on create
-//   3. the FormVersion validation the API runs on create
-//   4. the one-summary-column rule applied when the form is created
+//   1. the import schema
+//   2. Form validation
+//   3. FormVersion validation
+//   4. the one-summary-column rule
 //
 //   node validate-template.mjs "Pet application.json"
 //
@@ -16,7 +16,7 @@ const errors = [];
 const warnings = [];
 const fail = (where, message) => errors.push(`${where}: ${message}`);
 
-// The API's "present" check — '' and [] count as absent, false and 0 do not.
+// The "present" check — '' and [] count as absent, false and 0 do not.
 const isPresent = (v) => !(v === null || v === undefined || v === '' || (Array.isArray(v) && v.length === 0));
 
 const ITEM_TYPES = [

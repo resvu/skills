@@ -54,8 +54,8 @@ file rather than a third implementation.
    indexes, and fills every default the importer and the API expect.
 4. **Validate** — `node scripts/validate-template.mjs "<Title>.json"`, or `python3
    scripts/template_tool.py validate "<Title>.json"`. It re-implements all four gates the file has to pass:
-   the console's import schema, the `Form` and `FormVersion` validation the API runs on create, and the
-   one-summary-column rule. Do not hand over a file that has not passed this.
+   the import schema, `Form` validation, `FormVersion` validation, and the one-summary-column rule. Do not
+   hand over a file that has not passed this.
 5. **Hand it over.** The user imports it at Workflow → Templates → Import template and picks the target
    communities there. The file deliberately carries no community, payment account or notification admin —
    the importer forces those off (see "What the importer throws away" below).
@@ -66,9 +66,8 @@ five-status set if `workflows` is omitted, but say so explicitly rather than let
 
 ## The traps that actually bite
 
-- **Empty strings are not "present" server-side.** `isPresent()` treats `''`, `null`, `undefined` and `[]`
-  as missing. The importer's zod happily accepts `description: ""`, then the API rejects the whole create
-  with `Description is required`. Template `title` and `description`, and every workflow's `name`,
+- **Empty strings are not "present".** `''`, `null`, `undefined` and `[]` all count as missing. The import
+  schema happily accepts `description: ""`, then the create is rejected with `Description is required`. Template `title` and `description`, and every workflow's `name`,
   `description` and `color`, must be non-empty.
 - **Indexes are range-checked.** Each item's `index` must be in `0 … items.length - 1`, and each select
   option's `index` in `0 … options.length - 1`. Keep them contiguous and 0-based.
