@@ -5,15 +5,15 @@ description: Turn a spreadsheet, CSV, PDF or document that describes a request f
 
 # Workflow template import files
 
-The admin console imports request-form templates from JSON: **Workflow → Templates → Import template**
-(`apps/admin-console/app/modules/workflow/routes/templates/index/import-button/`). The same shape falls out
-of the per-template **Export** action, so a generated file has to look like an export.
+The admin console imports request-form templates from JSON: **Workflow → Templates → Import template**.
+The same shape falls out of the per-template **Export** action, so a generated file has to look like an
+export.
 
 A template carries two halves:
 
 - **items** — the fields a requestor fills in (short text, select, date, upload …).
 - **workflows** — the statuses a request moves through. At least one is required, and the **first element of
-  the array is the status every new submission starts in** (`apps/api/src/models/submission.ts:1347`).
+  the array is the status every new submission starts in**.
 
 ## Pick a runtime first
 
@@ -21,7 +21,7 @@ The scripts ship twice, with identical rules and identical messages. Check what 
 
 | If | Use |
 | --- | --- |
-| `node` is on PATH (always true inside this repo) | `node scripts/<name>.mjs …` |
+| `node` is on PATH | `node scripts/<name>.mjs …` |
 | only `python3` is | `python3 scripts/template_tool.py <read\|build\|validate> …` |
 | neither is | the fallback at the bottom of this file |
 
@@ -32,7 +32,7 @@ workbook themselves. **They must stay in step**: a rule changed in one belongs i
 Probe for a runtime by asking for a version and reading the output — `node -v`, then
 `python3 -c "print(1)"` — rather than trusting an exit code. Claude Code running is no evidence either way:
 the native install is a self-contained binary that exposes no interpreter on PATH, so `node` is there only
-because someone installed it.
+if someone installed it.
 
 **On Windows, expect neither.** A stock Windows 10/11 ships PowerShell (5.1) and `cmd`, no Node and no real
 Python — and `python3.exe` exists as a Microsoft Store stub, so a bare `python3` probe can appear to work
@@ -54,28 +54,11 @@ file rather than a third implementation.
    indexes, and fills every default the importer and the API expect.
 4. **Validate** — `node scripts/validate-template.mjs "<Title>.json"`, or `python3
    scripts/template_tool.py validate "<Title>.json"`. It re-implements all four gates the file has to pass:
-   the importer's zod schema in `import-button.tsx`, the `Form` and `FormVersion` model validators, and the
-   one-summary-column rule in `createForm`. Do not hand over a file that has not passed this.
+   the console's import schema, the `Form` and `FormVersion` validation the API runs on create, and the
+   one-summary-column rule. Do not hand over a file that has not passed this.
 5. **Hand it over.** The user imports it at Workflow → Templates → Import template and picks the target
    communities there. The file deliberately carries no community, payment account or notification admin —
    the importer forces those off (see "What the importer throws away" below).
-
-Working inside this repo, you can also check a file against the **real** importer schema rather than the
-re-implementation — worth doing if `import-button.tsx` has changed since this skill was written:
-
-```bash
-# from the repo root — $PWD matters: an ESM import resolves against the script, not the cwd
-{ echo "import { z } from '$PWD/apps/admin-console/node_modules/zod/index.js';"
-  sed -n '/^const ignore = z.any/,/^});$/p' \
-    apps/admin-console/app/modules/workflow/routes/templates/index/import-button/import-button.tsx
-  echo 'const { readFileSync } = await import("node:fs");'
-  echo 'const r = requiredFields.safeParse(JSON.parse(readFileSync(process.argv[2], "utf8")));'
-  echo 'console.log(r.success ? "accepted" : JSON.stringify(r.error.issues, null, 2));'
-} > /tmp/zod-check.mjs && node /tmp/zod-check.mjs "<Title>.json"
-```
-
-It only covers gate 1 — it says nothing about the model validators — so it supplements step 4 rather than
-replacing it.
 
 Ask the user before guessing at anything the source does not state — above all the **statuses**, since most
 customer spreadsheets describe only the fields. `build-template.mjs` will fall back to the console's default
@@ -105,15 +88,15 @@ five-status set if `workflows` is omitted, but say so explicitly rather than let
 
 ## What the importer throws away
 
-`import-button.tsx` strips `id`, `orderNum`, `sites`, `groups`, `paymentAccount`,
+The importer strips `id`, `orderNum`, `sites`, `groups`, `paymentAccount`,
 `newSubmissionNotificationAdmins`, `isPublic`, and forces `isPaymentRequired` and all four notification
 booleans to `false`. Fresh UUIDs are minted for every item, option and workflow. So don't spend effort on
-those fields — but do keep the keys the zod schema requires, listed in `references/json-contract.md`.
+those fields — but do keep the keys the import schema requires, listed in `references/json-contract.md`.
 
 ## Reference
 
 - `references/json-contract.md` — the exact shape of every item type, the workflow shape, the top-level
-  fields, and where each validation rule is enforced in the codebase.
+  fields, and which gate enforces each validation rule.
 - `references/source-mapping.md` — reading the source file and mapping it onto the spec.
 - `examples/input-spec.example.json` — a spec covering every item type. **This is build input, not an
   importable file**; the admin console rejects it with "Invalid import file".

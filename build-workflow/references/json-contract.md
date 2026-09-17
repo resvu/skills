@@ -2,16 +2,15 @@
 
 Three gates decide whether a file imports. All three must pass.
 
-| Gate | Where | What it checks |
+| Gate | Where it runs | What it checks |
 | --- | --- | --- |
-| Importer zod | `apps/admin-console/app/modules/workflow/routes/templates/index/import-button/import-button.tsx` | Top-level keys and their primitive types; `workflows` non-empty |
-| `Form` model | `apps/api/src/models/form.ts` (`validateRequiredFields`) | Title/description present, popup and auto-close pairings |
-| `FormVersion` model | `apps/api/src/models/form-version.ts` (`validateWorkflows`, `validateItems`) | Per-item required fields, index ranges, option shape |
+| Import schema | Admin console, on picking the file | Top-level keys and their primitive types; `workflows` non-empty |
+| `Form` validation | API, on create | Title/description present, popup and auto-close pairings |
+| `FormVersion` validation | API, on create | Per-item required fields, index ranges, option shape |
 
-Plus one resolver rule in `apps/api/src/apollo-servers/admin-server/modules/forms/resolvers.ts`: at most one
-`SHORT_TEXT` item with `showAsSummary: true`.
+Plus one rule applied when the form is created: at most one `SHORT_TEXT` item with `showAsSummary: true`.
 
-"Present" means `isPresent()` in `apps/api/src/utils/object-helpers.ts`: **`''`, `null`, `undefined` and `[]`
+The API's notion of "present" is stricter than the import schema's: **`''`, `null`, `undefined` and `[]`
 all count as missing**; `false` and `0` count as present.
 
 ## Top level
@@ -60,15 +59,14 @@ Fields the zod schema tolerates but the importer discards: `id`, `orderNum`, `si
 }
 ```
 
-- **Array order is what matters for the start status**: a new submission opens on `workflows[0]`
-  (`apps/api/src/models/submission.ts:1347`), regardless of `index`.
+- **Array order is what matters for the start status**: a new submission opens on `workflows[0]`,
+  regardless of `index`.
 - `type` buckets the status for sorting in the resident app — `UNACTIONED` (1) before `ACTIONED` (2) before
-  `COMPLETED` (3), in `apps/api/src/apollo-servers/user-server/services/searches/submission-search.ts`.
-  Use `UNACTIONED` for the opening status, `ACTIONED` for work in flight and `COMPLETED` for terminal ones.
+  `COMPLETED` (3). Use `UNACTIONED` for the opening status, `ACTIONED` for work in flight and `COMPLETED` for terminal ones.
   (The console's blank template marks even *Complete* and *Declined* as `ACTIONED`, so either is accepted.)
 
-The console's default palette lives in `COLOR_PICKER_BACKGROUND_TEXT_COLOR`
-(`apps/admin-console/app/modules/workflow/helper.ts`); any hex works.
+`color` is a hex string; any value works, so the console's own palette is a convention rather than a
+constraint.
 
 ## Items (the form fields)
 
@@ -126,13 +124,3 @@ with `index` in `0 … options.length - 1`.
   "richText": { "ops": [{ "insert": "Approval takes up to 10 business days.\n" }] }
 }
 ```
-
-## Where the shape is declared
-
-- GraphQL types and enums: `apps/api/src/apollo-servers/admin-server/modules/form-versions/typedefs.graphql`
-- The exported fragment: `FormDetails` in
-  `apps/admin-console/app/modules/workflow/components/template-form/index.tsx`
-- Per-field fragments and the console's own defaults:
-  `apps/admin-console/app/modules/workflow/components/request-form/field/*.tsx`
-- The blank template the console starts from: `blankRequestFormTemplateBase()` in
-  `apps/admin-console/app/modules/workflow/components/template-form/template.ts`

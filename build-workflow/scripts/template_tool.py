@@ -473,7 +473,7 @@ def error(where, message):
 
 
 def is_present(value):
-    """apps/api/src/utils/object-helpers.ts — '' and [] count as absent, False and 0 do not."""
+    """The API's "present" check — '' and [] count as absent, False and 0 do not."""
     if value is None:
         return False
     if isinstance(value, str) and value == "":

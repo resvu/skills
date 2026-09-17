@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // Checks a workflow-template JSON against every gate a real import passes through:
 //
-//   1. the importer's zod schema   — apps/admin-console/.../import-button/import-button.tsx
-//   2. the Form model validators   — apps/api/src/models/form.ts
-//   3. the FormVersion validators  — apps/api/src/models/form-version.ts
-//   4. the createForm resolver     — apps/api/src/apollo-servers/admin-server/modules/forms/resolvers.ts
+//   1. the admin console's import schema, applied when the file is picked
+//   2. the Form validation the API runs on create
+//   3. the FormVersion validation the API runs on create
+//   4. the one-summary-column rule applied when the form is created
 //
 //   node validate-template.mjs "Pet application.json"
 //
@@ -16,7 +16,7 @@ const errors = [];
 const warnings = [];
 const fail = (where, message) => errors.push(`${where}: ${message}`);
 
-// apps/api/src/utils/object-helpers.ts — '' and [] count as absent, false and 0 do not.
+// The API's "present" check — '' and [] count as absent, false and 0 do not.
 const isPresent = (v) => !(v === null || v === undefined || v === '' || (Array.isArray(v) && v.length === 0));
 
 const ITEM_TYPES = [
