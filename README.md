@@ -1,80 +1,48 @@
-# resvu-skills
+# Resvu skills for Claude
 
-Claude Code skills for working with Resvu, packaged as a plugin.
+Helpers that let Claude do Resvu work for you. Right now there is one: it turns a form you already have —
+a spreadsheet, a Word document, a PDF — into a request form you can load straight into the admin console.
 
-This repository is both the plugin and the marketplace that serves it.
+## Set it up once
 
-## Install
+In Claude Code, type these two lines:
 
 ```
 /plugin marketplace add resvu/skills
 /plugin install resvu@resvu-skills
 ```
 
-The skill is then available as `/resvu:build-workflow`, and Claude will reach for it on its own when
-someone hands over a form definition.
+That's the whole setup. You won't need to do it again.
 
-To try it without installing:
+## Using it
 
-```bash
-claude --plugin-dir ./plugins/resvu
-```
+Give Claude your form and say what you want. For example:
 
-## Skills
+> Here's the pet application form our board signed off on — turn it into a Resvu workflow template.
+> *(attach the spreadsheet)*
 
-### `build-workflow` — Resvu workflow templates
+Claude reads the form, works out which questions are text boxes, dropdowns, dates or file uploads, and
+builds the file the admin console expects. It will ask you about anything the document doesn't make clear —
+most often the **statuses** a request moves through, like *New → In review → Complete*, since most forms
+list the questions but not the steps.
 
-Turns a spreadsheet, CSV, PDF or document describing a request form into the JSON the admin console's
-**Workflow → Templates → Import template** button accepts: form fields plus the workflow statuses a request
-moves through. Also covers hand-authoring, repairing and validating an existing template export.
+You'll get back a file. To load it:
 
-The skill's own instructions live in
-[`plugins/resvu/skills/build-workflow/SKILL.md`](plugins/resvu/skills/build-workflow/SKILL.md).
+1. Open the admin console and go to **Workflow → Templates**
+2. Click **Import template**
+3. Choose the file, then pick the communities it should apply to
 
-#### Using the scripts directly
+Nothing is created until the file is accepted, so a failed import costs you nothing — you can fix it and
+try again.
 
-Nothing needs installing — the Node scripts and the Python one are dependency-free (they unzip `.xlsx`
-workbooks and read the sheet XML themselves) and implement identical rules.
+## Good to know
 
-```bash
-cd plugins/resvu/skills/build-workflow
+- **Check the result before you publish it.** Claude makes sensible guesses about question types, but the
+  form is yours — read it over in the console and adjust anything that isn't right.
+- **Tell it the statuses if you care about them.** Otherwise it falls back to a standard set and will say
+  so.
+- **Images and attachments don't carry across** between accounts, so add those in the console afterwards.
 
-node scripts/read-sheet.mjs form.xlsx               # inspect the source rows
-node scripts/build-template.mjs spec.json -o "Pet application.json"
-node scripts/validate-template.mjs "Pet application.json"
-```
+## Questions or problems
 
-With `python3` instead of `node`:
-
-```bash
-python3 scripts/template_tool.py read form.xlsx
-python3 scripts/template_tool.py build spec.json -o "Pet application.json"
-python3 scripts/template_tool.py validate "Pet application.json"
-```
-
-The two implementations must stay in step: a rule changed in one belongs in the other, and
-`references/json-contract.md` is the source both follow.
-
-## Layout
-
-```
-.claude-plugin/marketplace.json   # the marketplace listing
-plugins/resvu/
-├── .claude-plugin/plugin.json    # the plugin manifest
-└── skills/
-    └── build-workflow/           # one skill; more go alongside it
-```
-
-Adding a skill means dropping another directory under `plugins/resvu/skills/` — the marketplace and
-manifest need no change.
-
-## Before publishing changes
-
-```bash
-claude plugin validate . --strict
-claude plugin validate ./plugins/resvu --strict
-```
-
-Bump `version` in **both** `plugins/resvu/.claude-plugin/plugin.json` and
-`.claude-plugin/marketplace.json` when you change the plugin — installed copies only update when the
-version changes.
+Open an issue on this repository, or ask whoever set Claude up for your team.
