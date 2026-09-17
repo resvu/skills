@@ -13,6 +13,12 @@ In Claude Code, type these two lines:
 /plugin install resvu@resvu-skills
 ```
 
+Then turn on automatic updates, so you get improvements as we make them:
+
+1. Type `/plugin`
+2. Go to the **Marketplaces** tab
+3. Select **resvu-skills**, then **Enable auto-update**
+
 That's the whole setup. You won't need to do it again.
 
 ## Using it
@@ -70,6 +76,9 @@ To set it up, open Claude Code and type these two lines:
 
   /plugin marketplace add resvu/skills
   /plugin install resvu@resvu-skills
+
+Then type /plugin, open the Marketplaces tab, select resvu-skills and choose
+"Enable auto-update" so you get improvements automatically.
 
 That's a one-off. After that, just send Claude your form and ask for a Resvu
 workflow template — or describe the form you want, if you don't have one yet.
