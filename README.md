@@ -1,7 +1,8 @@
 # Resvu skills for Claude
 
-Helpers that let Claude do Resvu work for you. Right now there is one: it turns a form you already have —
-a spreadsheet, a Word document, a PDF — into a request form you can load straight into the admin console.
+Helpers that let Claude do Resvu work for you. Right now there is one: it builds a request form you can
+load straight into the admin console — either from a form you already have, or from a description of the
+one you want.
 
 ## Set it up once
 
@@ -16,15 +17,24 @@ That's the whole setup. You won't need to do it again.
 
 ## Using it
 
-Give Claude your form and say what you want. For example:
+**If you already have the form** — a spreadsheet, a Word document, a PDF, even a photo of a paper form —
+hand it over and say what you want:
 
 > Here's the pet application form our board signed off on — turn it into a Resvu workflow template.
 > *(attach the spreadsheet)*
 
-Claude reads the form, works out which questions are text boxes, dropdowns, dates or file uploads, and
-builds the file the admin console expects. It will ask you about anything the document doesn't make clear —
-most often the **statuses** a request moves through, like *New → In review → Complete*, since most forms
-list the questions but not the steps.
+**If you don't, just describe it:**
+
+> Set up a maintenance request form. Ask for the resident's name and unit, what's broken, how urgent it is,
+> a photo, and whether we can enter while they're out. It should go New → Assigned → Scheduled → Done.
+
+Either way, Claude works out which questions are text boxes, dropdowns, dates or file uploads, and builds
+the file the admin console expects. When you've described the form rather than sent one, it will read the
+whole thing back to you first — every question and its answer type — so you can correct it before anything
+is built.
+
+It will ask about anything you haven't made clear — most often the **statuses** a request moves through,
+like *New → In review → Complete*, since people usually think of the questions but not the steps.
 
 You'll get back a file. To load it:
 
@@ -38,7 +48,8 @@ try again.
 ## Good to know
 
 - **Check the result before you publish it.** Claude makes sensible guesses about question types, but the
-  form is yours — read it over in the console and adjust anything that isn't right.
+  form is yours — read it over in the console and adjust anything that isn't right. This matters most when
+  you described the form rather than sent one, since there's no document to check it against.
 - **Tell it the statuses if you care about them.** Otherwise it falls back to a standard set and will say
   so.
 - **Images and attachments don't carry across** between accounts, so add those in the console afterwards.

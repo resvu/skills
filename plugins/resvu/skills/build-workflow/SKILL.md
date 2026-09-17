@@ -1,6 +1,6 @@
 ---
 name: build-workflow
-description: Turn a spreadsheet, CSV, PDF or document that describes a request form into the JSON file the admin console's "Import template" button accepts — form fields plus workflow statuses. Use when someone hands over a form definition (questions, answer types, statuses) in Excel/CSV/Word/PDF and wants it as a Resvu workflow template, or when hand-authoring, repairing or validating a template export JSON.
+description: Build the JSON file the admin console's "Import template" button accepts — form fields plus workflow statuses — from whatever the user has: a spreadsheet, CSV, PDF or document describing a request form, or just a description of the form they want. Use when someone hands over a form definition in Excel/CSV/Word/PDF, when they describe the form they need in conversation ("a pet application asking for X, Y, Z, going through these statuses"), or when hand-authoring, repairing or validating a template export JSON.
 ---
 
 # Workflow template import files
@@ -8,6 +8,13 @@ description: Turn a spreadsheet, CSV, PDF or document that describes a request f
 The admin console imports request-form templates from JSON: **Workflow → Templates → Import template**.
 The same shape falls out of the per-template **Export** action, so a generated file has to look like an
 export.
+
+It starts from either:
+
+- **a document** — a spreadsheet, CSV, PDF or Word file that lays the form out; or
+- **a description** — the user telling you what the form should ask, with no file at all.
+
+Both converge on the same spec in step 2, and everything after that is identical.
 
 A template carries two halves:
 
@@ -42,13 +49,16 @@ file rather than a third implementation.
 
 ## Workflow
 
-1. **Read the source.** `node scripts/read-sheet.mjs <file>` — or `python3 scripts/template_tool.py read
-   <file>` — prints the rows of an `.xlsx`, `.csv` or `.tsv` as JSON. For `.pdf` / `.docx`, use the `pdf` /
-   `docx` skills or read the text out directly.
+1. **Get the content.** From a file: `node scripts/read-sheet.mjs <file>` — or `python3
+   scripts/template_tool.py read <file>` — prints the rows of an `.xlsx`, `.csv` or `.tsv` as JSON. For
+   `.pdf` / `.docx`, use the `pdf` / `docx` skills or read the text out directly. **From a description,
+   there is nothing to read** — the user's words are the source, so skip straight to step 2 and take the
+   round-trip in `references/source-mapping.md` seriously, since no document exists to check your reading
+   against.
 2. **Write a spec** — the compact intermediate JSON in `examples/input-spec.example.json`. This is where the
-   judgement lives: which column holds the question, what answer type it implies, which rows are section
-   headings rather than fields. `references/source-mapping.md` covers the column vocabulary, the
-   type-inference rules and the layouts that show up in real customer forms.
+   judgement lives: what each question's answer type should be, which entries are section headings rather
+   than fields. `references/source-mapping.md` covers the spec vocabulary, the type-inference rules, the
+   layouts that show up in real customer forms, and how to work from a description.
 3. **Build** — `node scripts/build-template.mjs spec.json -o "<Title>.json"`, or `python3
    scripts/template_tool.py build spec.json -o "<Title>.json"`. It mints the ids, assigns contiguous
    indexes, and fills every default the importer and the API expect.
@@ -60,9 +70,14 @@ file rather than a third implementation.
    communities there. The file deliberately carries no community, payment account or notification admin —
    the importer forces those off (see "What the importer throws away" below).
 
-Ask the user before guessing at anything the source does not state — above all the **statuses**, since most
-customer spreadsheets describe only the fields. `build-template.mjs` will fall back to the console's default
-five-status set if `workflows` is omitted, but say so explicitly rather than letting it pass silently.
+Ask the user before guessing at anything they have not stated — above all the **statuses**, since both
+customer spreadsheets and off-the-cuff descriptions tend to cover only the fields. `build-template.mjs` will
+fall back to the console's default five-status set if `workflows` is omitted, but say so explicitly rather
+than letting it pass silently.
+
+Build the form the user asked for, not the form you would design. Where they have been vague, infer and say
+what you inferred; where a form of this kind obviously needs something they did not mention, ask rather than
+adding it silently.
 
 ## The traps that actually bite
 
@@ -96,7 +111,8 @@ those fields — but do keep the keys the import schema requires, listed in `ref
 
 - `references/json-contract.md` — the exact shape of every item type, the workflow shape, the top-level
   fields, and which gate enforces each validation rule.
-- `references/source-mapping.md` — reading the source file and mapping it onto the spec.
+- `references/source-mapping.md` — turning a document or a description into a spec: the spec vocabulary,
+  type inference, and the playback step that stands in for a source document.
 - `examples/input-spec.example.json` — a spec covering every item type. **This is build input, not an
   importable file**; the admin console rejects it with "Invalid import file".
 - `examples/importable-template.example.json` — what that spec builds into: a file that does import, handy
