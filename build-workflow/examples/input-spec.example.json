@@ -1,0 +1,33 @@
+{
+  "title": "Pet application",
+  "description": "Apply for approval to keep a pet in your lot",
+  "fields": [
+    { "type": "note", "title": "Before you start", "text": "The committee meets monthly; allow up to 30 days for a decision." },
+    { "type": "section", "title": "Owner details", "description": "Who the pet belongs to" },
+    { "type": "text", "title": "Full name", "required": true, "summary": true },
+    { "type": "text", "title": "Contact number", "required": true },
+    { "type": "text", "title": "Unit number", "description": "As it appears on your levy notice" },
+    { "type": "section", "title": "About the pet" },
+    { "type": "select", "title": "Pet type", "options": ["Dog", "Cat", "Bird", "Other"], "required": true },
+    { "type": "text", "title": "Breed" },
+    { "type": "number", "title": "Age in years", "min": 0, "max": 30 },
+    { "type": "number", "title": "Weight in kilograms", "min": 0, "max": 100 },
+    { "type": "date", "title": "Date acquired" },
+    { "type": "paragraph", "title": "Where will the pet be kept during the day?", "required": true },
+    { "type": "multi", "title": "Which common areas will the pet use?", "options": ["Lobby", "Lift", "Car park", "Garden"] },
+    { "type": "image", "title": "Photo of the pet", "required": true },
+    { "type": "file", "title": "Vaccination certificate", "required": true },
+    { "type": "file", "title": "Council registration", "hidden": true, "description": "Collected by the manager, not shown on the community form" },
+    { "type": "checkbox", "title": "I have read and agree to the pet by-laws", "required": true }
+  ],
+  "workflows": [
+    { "name": "New", "type": "UNACTIONED", "description": "Application received", "color": "#79909C" },
+    { "name": "With committee", "type": "ACTIONED", "description": "Awaiting the committee's decision", "color": "#7E57C2" },
+    { "name": "Approved", "type": "COMPLETED", "description": "Pet approved", "color": "#66BB6A" },
+    { "name": "Declined", "type": "COMPLETED", "description": "Application declined", "color": "#F03333" }
+  ],
+  "options": {
+    "isSharableOnApp": true,
+    "isVisibleToCommitteeMembers": true
+  }
+}

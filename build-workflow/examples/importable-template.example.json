@@ -1,0 +1,334 @@
+{
+  "__typename": "Form",
+  "title": "Pet application",
+  "description": "Apply for approval to keep a pet in your lot",
+  "mainImages": [],
+  "attachments": [],
+  "currentFormVersion": {
+    "__typename": "FormVersion",
+    "id": "",
+    "items": [
+      {
+        "__typename": "Instruction",
+        "id": "c3a2fe48-7b37-4aef-86c0-643ec1fa375e",
+        "index": 0,
+        "type": "INSTRUCTION",
+        "title": "Before you start",
+        "richText": {
+          "ops": [
+            {
+              "insert": "The committee meets monthly; allow up to 30 days for a decision.\n"
+            }
+          ]
+        },
+        "isHidedFromSiteRequest": false
+      },
+      {
+        "__typename": "SectionHeading",
+        "id": "a1411116-6cc5-448d-8884-9fe3d1868e9e",
+        "index": 1,
+        "type": "SECTION_HEADING",
+        "title": "Owner details",
+        "description": "Who the pet belongs to"
+      },
+      {
+        "__typename": "ShortText",
+        "id": "6dea17d1-036d-4aa7-a959-526ac3888c18",
+        "index": 2,
+        "type": "SHORT_TEXT",
+        "title": "Full name",
+        "description": "",
+        "isHidedFromSiteRequest": false,
+        "showAsSummary": true,
+        "validators": {
+          "__typename": "ShortTextValidators",
+          "isRequired": true
+        }
+      },
+      {
+        "__typename": "ShortText",
+        "id": "fbfbf207-4a66-41b1-8834-47625ea29a18",
+        "index": 3,
+        "type": "SHORT_TEXT",
+        "title": "Contact number",
+        "description": "",
+        "isHidedFromSiteRequest": false,
+        "showAsSummary": false,
+        "validators": {
+          "__typename": "ShortTextValidators",
+          "isRequired": true
+        }
+      },
+      {
+        "__typename": "ShortText",
+        "id": "a8870b64-3373-405a-b80f-97bd9a1245ea",
+        "index": 4,
+        "type": "SHORT_TEXT",
+        "title": "Unit number",
+        "description": "As it appears on your levy notice",
+        "isHidedFromSiteRequest": false,
+        "showAsSummary": false,
+        "validators": {
+          "__typename": "ShortTextValidators",
+          "isRequired": false
+        }
+      },
+      {
+        "__typename": "SectionHeading",
+        "id": "0bd327d9-fa14-4041-889f-4f6083834c7e",
+        "index": 5,
+        "type": "SECTION_HEADING",
+        "title": "About the pet",
+        "description": ""
+      },
+      {
+        "__typename": "SingleSelect",
+        "id": "421e316c-7b4d-4961-98d8-0101017e9a33",
+        "index": 6,
+        "type": "SINGLE_SELECT",
+        "title": "Pet type",
+        "description": "",
+        "isHidedFromSiteRequest": false,
+        "options": [
+          {
+            "__typename": "SelectionOption",
+            "id": "9cacbb8f-8ed6-4f8a-bb87-b8f06ca8985a",
+            "title": "Dog",
+            "index": 0
+          },
+          {
+            "__typename": "SelectionOption",
+            "id": "ec428fb4-4a71-4009-8052-53af3ee8d01f",
+            "title": "Cat",
+            "index": 1
+          },
+          {
+            "__typename": "SelectionOption",
+            "id": "ac6c3df7-9b77-4ee2-b99c-4aaf5f81a825",
+            "title": "Bird",
+            "index": 2
+          },
+          {
+            "__typename": "SelectionOption",
+            "id": "e0e7ba70-effc-45a8-812b-8d51585db457",
+            "title": "Other",
+            "index": 3
+          }
+        ],
+        "validators": {
+          "__typename": "SingleSelectValidators",
+          "isRequired": true
+        }
+      },
+      {
+        "__typename": "ShortText",
+        "id": "17530f32-b3fe-4bb8-8108-d5cb5a50f4cb",
+        "index": 7,
+        "type": "SHORT_TEXT",
+        "title": "Breed",
+        "description": "",
+        "isHidedFromSiteRequest": false,
+        "showAsSummary": false,
+        "validators": {
+          "__typename": "ShortTextValidators",
+          "isRequired": false
+        }
+      },
+      {
+        "__typename": "Number",
+        "id": "e8447b1d-39c6-4b93-8f93-6d92a0c12d15",
+        "index": 8,
+        "type": "NUMBER",
+        "title": "Age in years",
+        "description": "",
+        "isHidedFromSiteRequest": false,
+        "validators": {
+          "__typename": "NumberValidators",
+          "minNumber": 0,
+          "maxNumber": 30,
+          "isRequired": false
+        }
+      },
+      {
+        "__typename": "Number",
+        "id": "5b574039-b202-407b-8105-a73d3d5c6ca5",
+        "index": 9,
+        "type": "NUMBER",
+        "title": "Weight in kilograms",
+        "description": "",
+        "isHidedFromSiteRequest": false,
+        "validators": {
+          "__typename": "NumberValidators",
+          "minNumber": 0,
+          "maxNumber": 100,
+          "isRequired": false
+        }
+      },
+      {
+        "__typename": "DateItem",
+        "id": "2e8c04b5-b568-400f-8900-a7fb20bf86e3",
+        "index": 10,
+        "type": "DATE",
+        "title": "Date acquired",
+        "description": "",
+        "isHidedFromSiteRequest": false,
+        "validators": {
+          "__typename": "DateItemValidators",
+          "isRequired": false
+        }
+      },
+      {
+        "__typename": "LongText",
+        "id": "65927924-e9a7-4d38-8dd2-0af80e5bd961",
+        "index": 11,
+        "type": "LONG_TEXT",
+        "title": "Where will the pet be kept during the day?",
+        "description": "",
+        "isHidedFromSiteRequest": false,
+        "validators": {
+          "__typename": "LongTextValidators",
+          "isRequired": true
+        }
+      },
+      {
+        "__typename": "MultiSelect",
+        "id": "c17d1e43-5df3-45e1-afa4-eb43ebd82a4b",
+        "index": 12,
+        "type": "MULTI_SELECT",
+        "title": "Which common areas will the pet use?",
+        "description": "",
+        "isHidedFromSiteRequest": false,
+        "options": [
+          {
+            "__typename": "SelectionOption",
+            "id": "daf23910-b326-457f-90d6-b53147710b58",
+            "title": "Lobby",
+            "index": 0
+          },
+          {
+            "__typename": "SelectionOption",
+            "id": "0a46bc82-0aa4-482c-bde0-ae8bdf4020ec",
+            "title": "Lift",
+            "index": 1
+          },
+          {
+            "__typename": "SelectionOption",
+            "id": "34bbf738-7c10-4779-be99-0b78ae3eeeeb",
+            "title": "Car park",
+            "index": 2
+          },
+          {
+            "__typename": "SelectionOption",
+            "id": "a81e6ef9-d0ad-452e-8e71-ba64ded5bec6",
+            "title": "Garden",
+            "index": 3
+          }
+        ],
+        "validators": {
+          "__typename": "MultiSelectValidators",
+          "isRequired": false
+        }
+      },
+      {
+        "__typename": "ImageUpload",
+        "id": "1731d287-db6e-44b8-8523-f9a4f3e1ecef",
+        "index": 13,
+        "type": "IMAGE_UPLOAD",
+        "title": "Photo of the pet",
+        "description": "",
+        "isHidedFromSiteRequest": false,
+        "validators": {
+          "__typename": "ImageUploadValidators",
+          "isRequired": true
+        }
+      },
+      {
+        "__typename": "FileUpload",
+        "id": "4ceaa6eb-dd81-4972-99a8-c8a881723217",
+        "index": 14,
+        "type": "FILE_ATTACHMENT",
+        "title": "Vaccination certificate",
+        "description": "",
+        "isHidedFromSiteRequest": false,
+        "validators": {
+          "__typename": "FileUploadValidators",
+          "isRequired": true
+        }
+      },
+      {
+        "__typename": "FileUpload",
+        "id": "653cb39b-a3e1-4fb1-bbb6-4aea1d068a7b",
+        "index": 15,
+        "type": "FILE_ATTACHMENT",
+        "title": "Council registration",
+        "description": "Collected by the manager, not shown on the community form",
+        "isHidedFromSiteRequest": true,
+        "validators": {
+          "__typename": "FileUploadValidators",
+          "isRequired": false
+        }
+      },
+      {
+        "__typename": "CheckBox",
+        "id": "dab59ffa-f010-4445-bb3f-f042ef04aff9",
+        "index": 16,
+        "type": "CHECKBOX",
+        "title": "I have read and agree to the pet by-laws",
+        "description": "",
+        "isHidedFromSiteRequest": false,
+        "validators": {
+          "__typename": "CheckBoxValidators",
+          "isRequiredTrue": true
+        }
+      }
+    ],
+    "workflows": [
+      {
+        "__typename": "FormWorkflow",
+        "id": "9893f078-346f-455d-aec2-b34e21ba9385",
+        "color": "#79909C",
+        "name": "New",
+        "type": "UNACTIONED",
+        "description": "Application received",
+        "index": 0
+      },
+      {
+        "__typename": "FormWorkflow",
+        "id": "204ac688-336b-4788-b31c-8c6d1aac857e",
+        "color": "#7E57C2",
+        "name": "With committee",
+        "type": "ACTIONED",
+        "description": "Awaiting the committee's decision",
+        "index": 1
+      },
+      {
+        "__typename": "FormWorkflow",
+        "id": "bd6d6dc8-4873-4396-915f-18e681f304d7",
+        "color": "#66BB6A",
+        "name": "Approved",
+        "type": "COMPLETED",
+        "description": "Pet approved",
+        "index": 2
+      },
+      {
+        "__typename": "FormWorkflow",
+        "id": "2f10eae0-8840-4429-bb9d-203aa62c34ba",
+        "color": "#F03333",
+        "name": "Declined",
+        "type": "COMPLETED",
+        "description": "Application declined",
+        "index": 3
+      }
+    ]
+  },
+  "isEnableEditSubmission": false,
+  "isShowPopupMessage": false,
+  "popupMessage": "",
+  "paymentAmount": null,
+  "isSharableOnApp": true,
+  "isVisibleToCommitteeMembers": true,
+  "isInternalAdminWorkflow": false,
+  "isUsedForJobs": false,
+  "isAutoCloseInactiveEnabled": false,
+  "autoCloseInactiveDays": null
+}
